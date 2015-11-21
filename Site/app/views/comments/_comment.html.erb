@@ -1,0 +1,4 @@
+<p> <%= comment.body %> </p>
+<% if current_user.id == comment.user.id %>
+<p><%= link_to "Удалить", comment, method: :delete %></p>
+<% end %>

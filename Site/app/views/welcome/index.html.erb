@@ -1,4 +1,19 @@
 <h1>Welcome</h1>
+<% unless @posts.empty? %>
+  <h3>Посты</h3>
+  <% @posts.each do |post| %>
+    <p> <%= link_to post.title, post %> </p>
+    
+    <!-- Выводим список категорий строчно, через запятую -->
+    <p> <b>Категории:</b>
+    <%= post.categories.pluck(:body).join(', ') %>
+    </p>
+     
+    <p><%= truncate(post.body,length: 100){link_to "Читать далее", post} %> </p>
+  <% end %>
+<% else %>
+<p>Постов нет!</p>
+<% end %>
+
 <%= link_to 'Posts', posts_path %>
-<%= link_to 'Comments', comments_path %>
 <%= link_to 'Категории', categories_path %>

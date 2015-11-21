@@ -8,7 +8,37 @@
 <p>
   <strong>Body:</strong>
   <%= @post.body %>
-</p>
+  </p>
+  <p>
+  <!-- Выводим категории -->
+  <b>Категории:</b>
+  <%= @post.categories.pluck(:body).join(', ') %>
+  </p>
+  <!-- Выводим автора -->
+  <%if @post.user.present? %>
+  <p>
+  <strong>Автор</strong>
+  <%= @post.user.email %>
+  </p>
+  <% end %>
 
-<%= link_to 'Edit', edit_post_path(@post) %> |
+
+<!-- Выводим комментарии к постам-->
+
+  <h3>Комментарии</h3>
+  <%unless @post.comments.empty?%>
+   <%= render @comments %>
+  <% else %>
+   <p>Комментариев пока нет. Оставте комментарий первым!</p>
+  <% end %>
+
+  <h4>Новый комментарий</h4>
+
+  <%= render 'comments/form' %>
+  
+
+
+<% if current_user.id == @post.user.id %>
+<%= link_to 'Edit', edit_post_path(@post) %>
+<% end %>
 <%= link_to 'Back', posts_path %>

@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
-  resources :comments
-  resources :posts
+  devise_for :users
+  resources :posts do 
+    resources :comments, shallow: true #метод shallow для процедуры удаления, редактирования...
+    #указывает ресурс как не вложенный и можно обращаться на прямую, минуя родительсий ресурс
+  end
+  
   resources :categories
   root 'welcome#index'
 
