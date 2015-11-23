@@ -1,0 +1,4 @@
+<p> <%= comment.body %>
+<%= link_to "Удалить", [:admin, comment], method: :delete, data: { confirm: 'Are you sure?' }  %>
+<%= link_to "Редактировать", edit_admin_comment_path %>
+</p>

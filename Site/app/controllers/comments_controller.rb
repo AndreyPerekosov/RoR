@@ -1,8 +1,8 @@
 class CommentsController < ApplicationController
-  before_action :authenticate_user!, expect: [:index, :show]
+  before_action :authenticate_user!, expect: [:index, :show] #это - фильтры, еще называется callback
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
   before_action :validate_user, only: [:edit, :destroy, :update] #не забываем при 
-  # валидации user валидировать и при update тоже, иначе дырка в безопасности 
+  # валидации user валидировать  #update тоже, иначе дырка в безопасности 
   
   def index
     @comments = Comment.all
@@ -25,7 +25,7 @@ class CommentsController < ApplicationController
   # POST /comments
   # POST /comments.json
   def create
-    @post = Post.find(params[:post_id]) #загружаем нужный пост
+    @post = Post.find(params[:post_id]) #загружаем нужный пост для этого и нужен вложенный ресурс
     @comment = Comment.new(comment_params)
     @comment.post = @post #связываем пост и комментарий
     @comment.user = current_user
@@ -56,7 +56,7 @@ class CommentsController < ApplicationController
   # DELETE /comments/1.json
   def destroy
     @comment.destroy
-    redirect_to @comment.post #используем удаленный из бызы коммент, но еще существующий
+    redirect_to @comment.post #используем удаленный из базы коммент, но еще существующий
     #в пространству памяти для перенаправления на родительский пост
   end
 

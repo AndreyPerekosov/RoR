@@ -19,7 +19,7 @@ class PostsController < ApplicationController
 
   # GET /posts/new
   def new
-    @post = Post.new
+    @post = Post.new #создаем переменную (она же объект в ror) для формы _form.html.erb
   end
 
   # GET /posts/1/edit
@@ -30,6 +30,8 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
     @post = current_user.posts.new(post_params) #создаваемый пост привязываем к текущему юсеру
+    #здесь опять идет создание переменной т.к. как в #new, но уже с параметрами
+    #создаем два раза т.к. переменная @post между http-запросами не сохраняются. 
 
     respond_to do |format|
       if @post.save

@@ -1,0 +1,16 @@
+<h1>Список пользователей</h1>
+
+  <% @users.each do |user| %>
+    <p>
+      <%= user.email %>
+      <% unless user.admin? %>
+        <%= link_to 'Удалить', [:admin, user], method: :delete, data: {confirm: 'Вы уверены?'} %>
+      <% end %>
+    </p>
+  <% end %>
+
+
+
+
+
+

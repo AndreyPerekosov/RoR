@@ -1,0 +1,34 @@
+<p>
+  <strong>Название</strong>
+  <%= @post.title %>
+</p>
+
+<p>
+  <strong>Текст</strong>
+  <%= @post.body %>
+  </p>
+  <p>
+  <!-- Выводим категории -->
+  <b>Категории:</b>
+  <%= @post.categories.pluck(:body).join(', ') %>
+  </p>
+  <!-- Выводим автора -->
+  <%if @post.user.present? %>
+  <p>
+  <strong>Автор</strong>
+  <%= @post.user.email %>
+  </p>
+  <% end %>
+
+
+<!-- Выводим комментарии к постам-->
+
+  <h3>Комментарии</h3>
+  <%unless @post.comments.empty?%>
+   <%= render @comments %>
+  <% else %>
+   <p>Комментариев нет.</p>
+  <% end %>
+  
+<%= link_to 'Edit', edit_admin_post_path(@post) %>
+<%= link_to 'Back', admin_posts_path %>
