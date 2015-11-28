@@ -6,6 +6,6 @@
     <%= f.text_area :body %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit t('.submit', action: @comment.new_record? ? t('common.create') : t('common.update')) %>
   </div>
 <% end %>

@@ -1,0 +1,41 @@
+<h1>Список постов</h1>
+<!-- <%= link_to "Черновики", posts_path(unpublished: true) %> - ссылка на неопубликованные посты по первому способу -->
+<!-- второй способ, с помощью введения дополнительного роутинга и метода 
+ -->  <%= link_to "Черновики", unpublished_posts_path %> 
+ <table>
+  <thead>
+    <tr>
+      <th><%= t('common.title')%></th>
+      <th><%= t('common.body')%></th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @posts.each do |post| %>
+    <!-- Выводим список категорий строчно, через запятую -->
+      <tr>
+        <td><%= post.title %></td>
+        <td><%= post.body %></td>
+        <td><%= link_to t('common.show'), post %></td>
+        <td><%= link_to t('common.edit'), edit_post_path(post) %></td>
+        <td><%= link_to t('common.delete'), post, method: :delete, data: { confirm: t(:sure) }%></td>
+          <% if current_user.owner_of?(post) %>
+            <td><%= link_to 'Снять с публикации', unpublish_post_path(post), method: :unpublish, data: { confirm: 'Вы хотите снять с публикации пост?' }%></td>
+            <% if current_user && current_user.subscribed_to?(post) %>
+        <td><%= link_to 'Отписаться', current_user.subscription_for?(post), method: :delete %> </td>
+            <!-- subscribe_for возвращает объект и мы его можем удалить -->
+            <% else %>
+            <!-- для подписки указываем метод :post, т.к. того требует метод create --> 
+             <td><%= link_to 'Подписаться', post_subscriptions_path(post), method: :post, data: { confirm: 'Вы хотите подписаться на пост?'} %></td>
+            <% end %>
+          <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+
+<%= link_to t('common.new_post'), new_post_path %>

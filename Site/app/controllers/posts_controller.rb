@@ -1,17 +1,20 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!, expect: [:index, :show] #требуем аунтификацию для всего кроме показать и список
-  before_action :set_post, only: [:show, :edit, :update, :destroy, :validate_user] #Важно! Фильтры выполнятются в порядке следования
+  before_action :set_post, only: [:show, :edit, :update, :destroy, :validate_user, :publish, :unpublish] #Важно! Фильтры выполнятются в порядке следования
   before_action :validate_user, only: [:edit, :destroy, :update]
   
 
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all
+    @posts = Post.reverse_order(:desc).published.all
+    render 'published'
   end
-
-  # GET /posts/1 кроме
-  # GET /posts/1.json
+  
+  def unpublished  #метод для отображения не опубликованных постов
+    @posts = Post.reverse_order(:desc).unpublished.all
+  end
+  
   def show
     @comments = @post.comments
     @comment = Comment.new
@@ -35,7 +38,7 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.save
-        format.html { redirect_to @post, notice: 'Post was successfully created.' }
+        format.html { redirect_to @post, notice: t(:post_created) }
       else
         format.html { render :new }
       end
@@ -47,7 +50,7 @@ class PostsController < ApplicationController
   def update
     respond_to do |format|
       if @post.update(post_params)
-        format.html { redirect_to @post, notice: 'Post was successfully updated.' }
+        format.html { redirect_to @post, notice: t(:post_updated) }
       else
         format.html { render :edit }
       end
@@ -59,12 +62,21 @@ class PostsController < ApplicationController
   def destroy
     @post.destroy
     respond_to do |format|
-      format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
+      format.html { redirect_to posts_url, notice: t(:post_delete) }
     end
   end
 
+  def publish
+   @post.published = true
+   redirect_to unpublished_posts_path if @post.save  
+  end
 
-  private
+ def unpublish
+  @post.published = false
+  redirect_to posts_path if @post.save 
+  end
+
+private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
       @post = Post.find(params[:id])
@@ -72,19 +84,14 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:title, :body, category_ids: []) 
+      params.require(:post).permit(:title, :body, :published, category_ids: []) 
       #:category_ids: [] - ожидаем ввода массива id категорий, т.к их может быть более одной
     end
 
     def validate_user
-      if !(current_user && current_user.id == @post.user.id) #можно проще unless @post.user == current_user но это будет затратней по ресурсам
-        #т.к. не грузим целый объект, а не поле с id Так что здесь лучше по id работать. Проверка current_user
-        # это проверка на существование current_user, иначе, если не залогинин user, то при сравнении выдаст ошибку, т.к. 
-        # т.к. current_user будет возвращать nill
-        redirect_to 'welcome/index', notice: 'Нет прав'
+      unless current_user.owner_of?(@post)
+        redirect_to :root, notice: 'Нет прав'
       end
-    end   
-   
- 
+    end
 
 end

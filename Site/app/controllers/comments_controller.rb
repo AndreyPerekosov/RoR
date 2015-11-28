@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :authenticate_user!, expect: [:index, :show] #это - фильтры, еще называется callback
+  before_action :authenticate_user!, expect: [:index, :show] #это - фильтры
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
   before_action :validate_user, only: [:edit, :destroy, :update] #не забываем при 
   # валидации user валидировать  #update тоже, иначе дырка в безопасности 
@@ -30,13 +30,10 @@ class CommentsController < ApplicationController
     @comment.post = @post #связываем пост и комментарий
     @comment.user = current_user
     #current_user вернет nil если не требовать аунтификации пользвателя
-
-    respond_to do |format|
       if @comment.save
-        format.html { redirect_to @post, notice: 'Comment was successfully created.' }
+        redirect_to @post, notice: t(:comment_created)
       else
-        format.html { render :new }
-      end
+        render :new 
     end
   end
 
@@ -45,7 +42,7 @@ class CommentsController < ApplicationController
   def update
     respond_to do |format|
       if @comment.update(comment_params)
-        format.html { redirect_to @comment, notice: 'Comment was successfully updated.' }
+        format.html { redirect_to @comment, notice: t(:comment_updated) }
       else
         format.html { render :edit }
       end
@@ -56,7 +53,7 @@ class CommentsController < ApplicationController
   # DELETE /comments/1.json
   def destroy
     @comment.destroy
-    redirect_to @comment.post #используем удаленный из базы коммент, но еще существующий
+    redirect_to @comment.post, notice: t(:comment_delete) #используем удаленный из базы коммент, но еще существующий
     #в пространству памяти для перенаправления на родительский пост
   end
 
@@ -71,8 +68,8 @@ class CommentsController < ApplicationController
       params.require(:comment).permit(:body)
     end
 
-     def validate_user
-      if !(current_user && current_user.id == @comment.user.id) #можно проще unless @post.user == current_user
+    def validate_user
+      if !((current_user && current_user.id == @comment.user.id) || current_user.admin?) #можно проще unless @post.user == current_user
         redirect_to 'welcome/index', notice: 'Нет прав'
       end
     end

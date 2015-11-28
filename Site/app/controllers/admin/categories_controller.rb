@@ -1,6 +1,6 @@
 #class Admin::CategoriesController < ApplicationController #так как данный файл лежит в папке Admin
 class Admin::CategoriesController < Admin::BaseController #т.к. мы вынесли общие вещи в basecontroller, то наследуемся от него 
-before_action :set_category, only: [:edit, :update, :destroy]  
+before_action :set_category, only: [:edit, :update, :destroy, :show]  
   
   def index
     @categories = Category.all
@@ -20,7 +20,7 @@ before_action :set_category, only: [:edit, :update, :destroy]
     @category = Category.new(category_params)
     
     if @category.save
-      redirect_to @category, notice: 'Категория создана'
+      redirect_to admin_categories_path, notice: 'Категория создана'
     else
       render :new
     end
@@ -28,7 +28,7 @@ before_action :set_category, only: [:edit, :update, :destroy]
 
   def update
     if @category.update(category_params)
-      redirect_to @category, notice: 'Категория обновлена'
+      redirect_to admin_categories_path, notice: 'Категория обновлена'
     else
       render :edit 
     end 

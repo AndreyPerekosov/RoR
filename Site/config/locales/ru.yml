@@ -1,0 +1,42 @@
+ru:
+  #for the #delete, etc in erb_templates...
+  sure: 'Вы уверены?'
+  # confirmation for posts_controller
+  post_created: 'Пост успешно создан'
+  post_udated: 'Пост успешно обновлен'
+  post_delete: 'Пост удален'
+
+  # confirmation for comments_controller
+  comment_created: 'Комментарий успешно создан'
+  comment_udated: 'Комментарий успешно обновлен'
+  comment_delete: 'Комментарий удален'
+
+  #locals for templates
+  common:
+    show: 'Показать'
+    edit: 'Редактировать'
+    delete: 'Удалить'
+    back: 'Назад'
+    create: 'Создать'
+    update: 'Изменить'
+    title: 'Название'
+    body: 'Текст'
+    new_post: 'Новый пост'
+    submit: '%{action} категорию'
+
+  welcome:
+    index:
+      title: 'Привет, Rails'
+      posts: 'Посты'
+  posts:
+    form:
+      submit: '%{action} пост' #меняем кнопку для для f.submit 
+  comments:
+    form:
+      submit: '%{action} комментарий'
+    edit:
+      title: 'Редактирование комментария'
+  admin:
+    categories:
+      form:
+        submit: '%{action} категорию'
