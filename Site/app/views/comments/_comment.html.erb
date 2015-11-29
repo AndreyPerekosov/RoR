@@ -1,5 +1,6 @@
 <p> <%= comment.body %> </p>
 <% if current_user && current_user.id == comment.user.id %>
-<%= link_to t('common.delete'), comment, method: :delete %>
-<%= link_to t('common.edit'), edit_comment_path(comment)%>
+<!-- подключаем иконку при помощи хэлпера -->
+<%= link_to_with_icon 'trash-o' comment, title: t('common.delete'), method: :delete %> <!-- 'trash-o' экранируем т.к. иначе -(минус) будет трактован как неверный синтаксис при записи вида :trash-o -->
+<%= link_with_icon :pencil, edit_comment_path(comment), title: t('common.edit')%> 
 <% end %>

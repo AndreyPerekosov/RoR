@@ -18,7 +18,9 @@
         <td><%= post.title %></td>
         <td><%= post.body %></td>
         <td><%= link_to t('common.show'), post %></td>
-        <td><%= link_to t('common.edit'), edit_post_path(post) %></td>
+        <td><%= link_to edit_post_path(post) do %>
+        <i class="fa fa-pencil"><%= t('common.edit')%></i> <!-- делаем иконку вместо надписи и еще саму надпись-->
+        </td>
         <td><%= link_to t('common.delete'), post, method: :delete, data: { confirm: t(:sure) }%></td>
           <% if current_user.owner_of?(post) %>
             <td><%= link_to 'Снять с публикации', unpublish_post_path(post), method: :unpublish, data: { confirm: 'Вы хотите снять с публикации пост?' }%></td>
