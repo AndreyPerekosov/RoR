@@ -3,5 +3,5 @@
   <%= @comment.body %>
 </p>
 
-<%= link_to t('common.edit'), edit_comment_path(@comment) %> |
+<%= link_with_icon, :pencil, edit_comment_path(@comment), title: t('common.edit')  %> 
 <%= link_to t('common.back'), @comment.post %>

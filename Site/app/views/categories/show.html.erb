@@ -4,9 +4,6 @@
   <%= @category.body %>
 </p>
 
-<%= link_to 'Edit', edit_category_path(@category) %> |
-<%= link_to 'Back', categories_path %>
-
 <% if current_user && current_user.admin? %> <!-- если текущий юзер админ даем ссылку на админскую view всех категорий -->
 <%= link_to 'Все категории', admin_categories_path %>
 <% end %>

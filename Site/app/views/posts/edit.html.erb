@@ -2,5 +2,5 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @post %> |
-<%= link_to 'Back', posts_path %>
+<%= link_with_icon :pencil, @post, title: t('common.edit') %> |
+<%= link_to t('common.back'), posts_path %>

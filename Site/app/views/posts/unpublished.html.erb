@@ -18,8 +18,8 @@
         <td><%= post.title %></td>
         <td><%= post.body %></td>
         <td><%= link_to t('common.show'), post %></td>
-        <td><%= link_to t('common.edit'), edit_post_path(post) %></td>
-        <td><%= link_to t('common.delete'), post, method: :delete, data: { confirm: t(:sure) }%></td>
+        <td><%= link_with_icon, :pencil, edit_post_path(post), title: t('common.edit') %></td>
+        <td><%= link_with_icon 'o-trash', post, title: t('common.delete'), method: :delete, data: { confirm: t(:sure) }%></td>
         <td><%= link_to 'Опубликовать', publish_post_path(post), method: :publish, 
                                                   data: { confirm: 'Вы хотите опубликовать пост?' }%></td>
         </tr>

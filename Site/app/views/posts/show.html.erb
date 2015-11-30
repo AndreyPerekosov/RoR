@@ -37,6 +37,6 @@
 
 
 <% if current_user.id == @post.user.id %>
-<%= link_to t('common.edit'), edit_post_path(@post) %>
+<%= link_with_icon, :pencil, edit_post_path(@post), title: t('common.edit') %>
 <% end %>
 <%= link_to t('common.back'), posts_path %>

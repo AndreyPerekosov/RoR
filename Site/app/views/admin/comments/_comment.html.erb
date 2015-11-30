@@ -1,4 +1,4 @@
 <p> <%= comment.body %>
-<%= link_to "Удалить", [:admin, comment], method: :delete, data: { confirm: 'Are you sure?' }  %>
-<%= link_to "Редактировать", edit_admin_comment_path %>
+<%= link_with_icon 'o-trash', [:admin, comment], title: t('common.delete') method: :delete, data: { confirm: 'Are you sure?' }  %>
+<%= link_with_icon :pencil, edit_admin_comment_path, title: t('common.edit') %>
 </p>
