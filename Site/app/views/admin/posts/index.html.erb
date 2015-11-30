@@ -19,7 +19,7 @@
         <td><%= post.title %></td>
         <td><%= post.body %></td>
         <td><%= link_to 'Show', [:admin, post] %></td>
-        <td><%= link_with_icon, :pencil, edit_admin_post_path(post), title: t('common.edit') %></td>
+        <td><%= link_with_icon :pencil, edit_admin_post_path(post), title: t('common.edit') %></td>
         <td><%= link_with_icon 'o-trash', [:admin, post], title: t('common.delete'), method: :delete, data: { confirm: 'Are you sure?' }%></td>
       </tr>
     <% end %>
