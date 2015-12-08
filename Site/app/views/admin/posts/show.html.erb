@@ -1,3 +1,4 @@
+<%=div_for @post do  %>
 <p>
   <strong>Название</strong>
   <%= @post.title %>
@@ -7,6 +8,9 @@
   <strong>Текст</strong>
   <%= @post.body %>
   </p>
+  <% end %>
+  <%= render 'form', hidden: true %>
+  <p><%= link_to 'Edit', '#', class: 'edit_post_link', data: { post_id: @post.id } %></p>
   <p>
   <!-- Выводим категории -->
   <b>Категории:</b>

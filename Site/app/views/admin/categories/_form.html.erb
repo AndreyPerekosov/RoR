@@ -1,11 +1,12 @@
-<%= form_for([:admin, @category]) do |f| %>
-  <%= render 'common/errors', object: @category %>
+<% hidden = false unless local_assigns[:hidden]%> <!-- здесь local_assigns хэш списка локальных переменных переданных в partial - мы устанавливаем перемменную hidden в false если она не была передана из index (т.е. новая переменная) partial не умеет работать с переменными которые ему не переданы  -->
+<%= form_for [:admin, category], html: {style: "display: #{hidden ? 'none' : 'block' }"} do |f| %>
+  <%= render 'common/errors', object: category %>
 
   <div class="field">
-    <%= f.label :body %><br>
-    <%= f.text_area :body %>
+    <%= f.label :body %>
+    <%= f.text_field :body %>
   </div>
   <div class="actions">
-   <%= f.submit t('.submit', action: @category.new_record? ? t('common.create') : t('common.update')) %>
+   <%= f.submit t('.submit', action: category.new_record? ? t('common.create') : t('common.update')) %>
   </div>
 <% end %>

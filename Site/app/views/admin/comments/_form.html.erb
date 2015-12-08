@@ -1,5 +1,6 @@
-<%= form_for([:admin, @comment]) do |f| %>
-  <%= render 'common/errors', object: @comment %>
+<%hidden = false unless local_assigns[:hidden]%>
+<%= form_for [:admin, comment], html: {style: "display: #{hidden ? 'none' : 'block' }"} do |f| %>
+  <%= render 'common/errors', object: comment %>
 
   <div class="field">
     <%= f.label :body %><br>

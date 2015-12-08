@@ -1,4 +1,6 @@
-<p> <%= comment.body %>
-<%= link_with_icon 'o-trash', [:admin, comment], title: t('common.delete') method: :delete, data: { confirm: 'Are you sure?' }  %>
-<%= link_with_icon :pencil, edit_admin_comment_path, title: t('common.edit') %>
-</p>
+<%= div_for comment do %>
+<p> <%= comment.body %></p>
+<% end %>
+<%= render 'admin/comments/form', comment: comment, hidden: true %> 
+<%= link_with_icon 'o-trash', [:admin, comment], title: t('common.delete'), method: :delete, data: { confirm: 'Are you sure?' }  %>
+<%= link_to 'Edit', '#', class: 'edit_comment_link', data: {comment_id: comment.id} %>

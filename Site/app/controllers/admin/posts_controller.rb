@@ -14,7 +14,7 @@ class Admin::PostsController < Admin::BaseController
 
   def update
     if @post.update(post_params)
-      redirect_to @post, notice: 'Пост отредактирован'
+      redirect_to [:admin, @post], notice: 'Пост отредактирован'
     else
       render :edit
     end

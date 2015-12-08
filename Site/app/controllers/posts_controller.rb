@@ -38,7 +38,7 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.save
-        format.html { redirect_to @post, notice: t(:post_created) }
+        format.html { redirect_to @post, notice: t(:post_created) } # redirect_to @post - автоматически запускает #show
       else
         format.html { render :new }
       end

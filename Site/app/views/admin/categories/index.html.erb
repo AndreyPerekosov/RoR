@@ -11,9 +11,14 @@
   <tbody>
     <% @categories.each do |category| %>
       <tr>
-        <td><%= category.body %></td>
-        <%= link_to t('common.show'), [:admin, category]%> </td> 
-        <td><%= link_with_icon :pencil, edit_admin_category_path(category), title: t('common.edit') %></td> <!-- здесь в явном виде не указывам, т.к. в роутинге есть префикс - используем хэлпер -->
+      <td>
+        <%= div_for category do %>
+        <%= category.body %>
+        <% end %>
+        <%= render 'form', category: category, hidden: true %><!--выводим форму для инлайн-редактирования-->
+        </td>
+        <td><%= link_to t('common.show'), [:admin, category]%> </td>
+        <td><%= link_with_icon :pencil, '#', title: t('common.edit'), class: 'edit_category_link', data: { category_id: category.id } %></td> <!-- здесь используем хелпер data для записи в переменную category_id номера id категории, которую собираемся редактировать, данный хэлпер может сохранять произвольные данные переданные с сервера-->
         <td><%= link_with_icon 'o-trash', [:admin, category], title: t('common.delete'), method: :delete, data: { confirm: t(:sure) } %></td>
       </tr>
     <% end %>
